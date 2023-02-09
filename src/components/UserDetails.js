@@ -1,17 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from "./Navbar";
+import {useParams} from "react-router-dom";
 
 function UserDetails(props) {
+    const  [selectUser, setSelectUser] =useState("");
+    const userId = useParams().userid;
+    let {users} = props;
+    useEffect(()=>{
+        users.forEach((user)=>{
+            if(user.id===userId){
+                setSelectUser(user)
+            }
+        })
+    },[])
+
     return (
         <div>
             <Navbar/>
             <h1>User Details</h1>
             <div className="content row">
                 <div className="col-6">
-                    <h4>Name</h4>
+                    <h4>{selectUser.name}</h4>
                     <ul className="list-group list-group-flush">
-                        <li className="list-group-item">Username :</li>
-                        <li className="list-group-item">Email: </li>
+                        <li className="list-group-item">Username :{selectUser.name}</li>
+                        <li className="list-group-item">Email: {selectUser.email}</li>
                         <li className="list-group-item">
                             <h5>Address Details</h5>
                             <ul>
@@ -39,7 +51,7 @@ function UserDetails(props) {
                         className="img-fluid"
                         alt="road"
                     />
-                    <p className="text-center">name</p>
+                    <p className="text-center">{selectUser.name+"'s photo"}</p>
                 </div>
             </div>
         </div>
